@@ -11,7 +11,10 @@ Will check if JIRA issue number has been commented before and will not comment a
 - Requires the `GITHUB_TOKEN` secret.
 - Supports `pull_request` event types.
 
-### Sample workflow
+Create the following file in the root directory of your project 
+`.github/workflows/issue-comment-on-pr.yml`
+
+### issue-comment-on-pr.yml
 
 ```yaml
 name: comment JIRA issue number on PR
