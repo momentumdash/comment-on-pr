@@ -13,13 +13,6 @@ if !ENV["GITHUB_TOKEN"]
   exit(1)
 end
 
-if ARGV[0].empty?
-  puts "Missing message argument."
-  exit(1)
-end
-
-message = ARGV[0]
-check_duplicate_msg = "true"
 repo = event["repository"]["full_name"]
 
 if ENV.fetch("GITHUB_EVENT_NAME") == "pull_request"
@@ -31,21 +24,36 @@ else
   pr = pulls.find { |pr| pr["head"]["sha"] == push_head }
 
   if !pr
-    puts "Couldn't find an open pull request for branch with head at #{push_head}."
+    puts "Couldn't find an open PR for branch with head at #{push_head}."
     exit(1)
   end
   pr_number = pr["number"]
 end
 
-coms = github.issue_comments(repo, pr_number)
+pr_title = event["pull_request"]["title"]
+branch_name = event["pull_request"]["head"]["ref"]
+item_matched = ""
 
-if check_duplicate_msg == "true"
-  duplicate = coms.find { |c| c["user"]["login"] == "github-actions[bot]" && c["body"] == message }
-
-  if duplicate
-    puts "The PR already contains this message"
-    exit(0)
-  end
+if pr_title.match(/[Mm][Dd][- ][0-9]*/)
+  item_matched = pr_title
+elsif branch_name.match(/[Mm][Dd][- ][0-9]*/)
+  item_matched = branch_name
 end
 
-github.add_comment(repo, pr_number, message)
+message = ""
+if item_matched.scan(/[Mm][Dd][- ][0-9]*/).any?
+  message = item_matched.scan(/[Mm][Dd][- ][0-9]*/).first.upcase.gsub(/ /, '-')
+end
+
+coms = github.issue_comments(repo, pr_number)
+duplicate = coms.find { |c| c["user"]["login"] == "github-actions[bot]" && c["body"] == message }
+if duplicate
+  puts "PR already contains JIRA issue comment"
+  exit(0)
+end
+
+if !message.empty? 
+  github.add_comment(repo, pr_number, message)
+else 
+  puts "No JIRA issue found"
+end
