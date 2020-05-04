@@ -1,19 +1,9 @@
-name: Comment on PR
-author: Aaron Klaassen <aaron@unsplash.com>
-description: Leaves a comment on an open PR matching a push event.
+name: Comment JIRA issue number on PR
+author: Sayam Hussain <sayam@momentumdash.com>
+description: Leaves a JIRA issue number as a comment on a PR
 branding:
   icon: 'message-square'  
   color: 'blue'
-inputs:
-  msg: 
-    description: Comment's message
-    required: true
-  check_for_duplicate_msg:
-    description: If false, action doesn't check for duplicate msg.
-    required: false
-    default: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.msg }}
