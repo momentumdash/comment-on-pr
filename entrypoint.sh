@@ -38,6 +38,9 @@ if pr_title.match(/[Mm][Dd][- ][0-9]*/)
   item_matched = pr_title
 elsif branch_name.match(/[Mm][Dd][- ][0-9]*/)
   item_matched = branch_name
+else
+  puts "No JIRA issue found in PR title or Branch name"
+  exit(0)
 end
 
 message = ""
@@ -55,5 +58,5 @@ end
 if !message.empty? 
   github.add_comment(repo, pr_number, message)
 else 
-  puts "No JIRA issue found"
+  puts "No JIRA issue found in PR title or Branch name"
 end
