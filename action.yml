@@ -17,4 +17,3 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.msg }}
-    - ${{ inputs.check_for_duplicate_msg }}

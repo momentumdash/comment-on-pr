@@ -19,7 +19,7 @@ if ARGV[0].empty?
 end
 
 message = ARGV[0]
-check_duplicate_msg = ARGV[1]
+check_duplicate_msg = "true"
 repo = event["repository"]["full_name"]
 
 if ENV.fetch("GITHUB_EVENT_NAME") == "pull_request"
