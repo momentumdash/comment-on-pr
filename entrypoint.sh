@@ -45,7 +45,7 @@ end
 
 message = ""
 if item_matched.scan(/[Mm][Dd][- ][0-9]*/).any?
-  message = item_matched.scan(/[Mm][Dd][- ][0-9]*/).first.upcase.gsub(/ /, '-')
+  message = item_matched.scan(/[Mm][Dd][- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
 end
 
 coms = github.issue_comments(repo, pr_number)
@@ -55,7 +55,7 @@ if duplicate
   exit(0)
 end
 
-if !message.empty? 
+if !message.empty? && message != "MD-"
   github.add_comment(repo, pr_number, message)
 else 
   puts "No JIRA issue found in PR title or Branch name"
