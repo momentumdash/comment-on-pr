@@ -46,6 +46,7 @@ end
 message = ""
 if item_matched.scan(/[PRO][- ][0-9]*/).any?
   message = item_matched.scan(/[PRO][- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
+  puts message
 end
 
 coms = github.issue_comments(repo, pr_number)
