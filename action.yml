@@ -1,6 +1,6 @@
-name: Comment JIRA issue number on PR
+name: Comment issue number on PR
 author: Sayam Hussain <sayam@momentumdash.com>
-description: Leaves a JIRA issue number as a comment on a PR
+description: Leaves a issue number as a comment on a PR
 branding:
   icon: 'message-square'  
   color: 'blue'

@@ -1,10 +1,10 @@
-# JIRA Issue Number Commenter on PR via GitHub Action
+# Issue Number Commenter on PR via GitHub Action
 
-A GitHub action to comment JIRA issue number when a PR is opened.
-JIRA issue number can be found from PR title or Branch name.
-Will check if JIRA issue number has been commented before and will not comment again if so.
+A GitHub action to comment issue number when a PR is opened.
+issue number can be found from PR title or Branch name.
+Will check if issue number has been commented before and will not comment again if so.
 
-## Finds MD-* JIRA Issues
+## Finds PRO-* Issues
 
 ## Usage
 
@@ -17,7 +17,7 @@ Create the following file in the root directory of your project
 ### issue-comment-on-pr.yml
 
 ```yaml
-name: comment JIRA issue number on PR
+name: comment issue number on PR
 
 on: 
   pull_request:
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: comment JIRA issue number on PR
+      - name: comment issue number on PR
         uses: momentumdash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

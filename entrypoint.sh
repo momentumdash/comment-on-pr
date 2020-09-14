@@ -34,29 +34,29 @@ pr_title = event["pull_request"]["title"]
 branch_name = event["pull_request"]["head"]["ref"]
 item_matched = ""
 
-if pr_title.match(/[Mm][Dd][- ][0-9]*/)
+if pr_title.match(/[PRO][- ][0-9]*/)
   item_matched = pr_title
-elsif branch_name.match(/[Mm][Dd][- ][0-9]*/)
+elsif branch_name.match(/[PRO][- ][0-9]*/)
   item_matched = branch_name
 else
-  puts "No JIRA issue found in PR title or Branch name"
+  puts "No issue found in PR title or Branch name"
   exit(0)
 end
 
 message = ""
-if item_matched.scan(/[Mm][Dd][- ][0-9]*/).any?
-  message = item_matched.scan(/[Mm][Dd][- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
+if item_matched.scan(/[PRO][- ][0-9]*/).any?
+  message = item_matched.scan(/[PRO][- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
 end
 
 coms = github.issue_comments(repo, pr_number)
 duplicate = coms.find { |c| c["user"]["login"] == "github-actions[bot]" && c["body"] == message }
 if duplicate
-  puts "PR already contains JIRA issue comment"
+  puts "PR already contains issue comment"
   exit(0)
 end
 
-if !message.empty? && message != "MD-"
+if !message.empty? && message != "PRO-"
   github.add_comment(repo, pr_number, message)
 else 
-  puts "No JIRA issue found in PR title or Branch name"
+  puts "No issue found in PR title or Branch name"
 end
