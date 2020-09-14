@@ -34,9 +34,9 @@ pr_title = event["pull_request"]["title"]
 branch_name = event["pull_request"]["head"]["ref"]
 item_matched = ""
 
-if pr_title.match(/[PRO][- ][0-9]*/)
+if pr_title.match(/PRO[- ][0-9]*/)
   item_matched = pr_title
-elsif branch_name.match(/[PRO][- ][0-9]*/)
+elsif branch_name.match(/PRO[- ][0-9]*/)
   item_matched = branch_name
 else
   puts "No issue found in PR title or Branch name"
@@ -44,8 +44,8 @@ else
 end
 
 message = ""
-if item_matched.scan(/[PRO][- ][0-9]*/).any?
-  message = item_matched.scan(/[PRO][- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
+if item_matched.scan(/PRO[- ][0-9]*/).any?
+  message = item_matched.scan(/PRO[- ][0-9]*/).first.upcase.gsub(/ /, '-').strip
   puts message
 end
 
